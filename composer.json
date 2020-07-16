@@ -24,7 +24,7 @@
     "flarum-extension": {
       "title": "GitHub Milestone Activity",
       "icon": {
-        "name": "fas fa-github-alt",
+        "name": "fab fa-github-alt",
         "background": "#10ae39",
         "color": "#fff"
       }
