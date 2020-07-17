@@ -3114,10 +3114,6 @@ var IssueList = /*#__PURE__*/function (_Component) {
   };
 
   _proto.view = function view() {
-    if (this.loading) {
-      return m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default.a, null);
-    }
-
     var loadingMore = m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default.a, null);
 
     if (!this.loadingMore) {
@@ -3136,7 +3132,9 @@ var IssueList = /*#__PURE__*/function (_Component) {
       className: "IndexPage-toolbar-view"
     }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(this.viewItems().toArray())), m("ul", {
       className: "IndexPage-toolbar-action"
-    }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(this.actionItems().toArray()))), m("ul", {
+    }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(this.actionItems().toArray()))), this.loading ? m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default.a, null) : m("div", {
+      className: "GithubMilestone-issuesContainer"
+    }, m("ul", {
       className: "GithubMilestone-issuesList"
     }, this.issues.map(function (issue) {
       return m("li", null, m(_IssueListItem__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -3144,7 +3142,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
       }));
     })), m("div", {
       className: "DiscussionList-loadMore"
-    }, loadingMore));
+    }, loadingMore)));
   };
 
   _proto.load = function load(more) {

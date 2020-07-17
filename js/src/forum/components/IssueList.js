@@ -20,10 +20,6 @@ export default class IssueList extends Component {
   }
 
   view() {
-    if (this.loading) {
-      return <LoadingIndicator />;
-    }
-
     let loadingMore = <LoadingIndicator />;
 
     if (!this.loadingMore) {
@@ -42,14 +38,20 @@ export default class IssueList extends Component {
           <ul className="IndexPage-toolbar-view">{listItems(this.viewItems().toArray())}</ul>
           <ul className="IndexPage-toolbar-action">{listItems(this.actionItems().toArray())}</ul>
         </div>
-        <ul className="GithubMilestone-issuesList">
-          {this.issues.map((issue) => (
-            <li>
-              <IssueListItem issue={issue} />
-            </li>
-          ))}
-        </ul>
-        <div className="DiscussionList-loadMore">{loadingMore}</div>
+        {this.loading ? (
+          <LoadingIndicator />
+        ) : (
+          <div className="GithubMilestone-issuesContainer">
+            <ul className="GithubMilestone-issuesList">
+              {this.issues.map((issue) => (
+                <li>
+                  <IssueListItem issue={issue} />
+                </li>
+              ))}
+            </ul>
+            <div className="DiscussionList-loadMore">{loadingMore}</div>
+          </div>
+        )}
       </div>
     );
   }
