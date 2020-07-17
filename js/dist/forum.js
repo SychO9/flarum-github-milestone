@@ -3074,7 +3074,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_Component__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/LoadingIndicator */ "flarum/components/LoadingIndicator");
 /* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _IssueListItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IssueListItem */ "./src/forum/components/IssueListItem.js");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _IssueListItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IssueListItem */ "./src/forum/components/IssueListItem.js");
+
 
 
 
@@ -3100,34 +3103,59 @@ var IssueList = /*#__PURE__*/function (_Component) {
       return m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default.a, null);
     }
 
-    return [m("div", {
-      className: "GithubMilestone-navigation"
-    }), m("div", {
+    var loadingMore = m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2___default.a, null);
+
+    if (!this.loadingMore) {
+      loadingMore = m(flarum_components_Button__WEBPACK_IMPORTED_MODULE_3___default.a, {
+        className: "Button",
+        onclick: this.load.bind(this, true)
+      }, app.translator.trans('sycho-github-milestone.forum.load_more'));
+    }
+
+    if (!this.canLoadMore() && !this.loadingMore) loadingMore = '';
+    return m("div", {
       className: "GithubMilestone-issues"
+    }, m("div", {
+      className: "GithubMilestone-navigation"
+    }), m("ul", {
+      className: "GithubMilestone-issuesList"
     }, this.issues.map(function (issue) {
-      return m(_IssueListItem__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      return m("li", null, m(_IssueListItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
         issue: issue
-      });
-    }))];
+      }));
+    })), m("div", {
+      className: "DiscussionList-loadMore"
+    }, loadingMore));
   };
 
-  _proto.load = function load() {
-    this.loading = true;
+  _proto.load = function load(more) {
+    this.page = this.page || 1;
+    if (!more) this.loading = true;
+    if (more) this.loadingMore = true;
+    if (more && this.canLoadMore()) this.page++;
     this.octokit.request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
       owner: 'flarum',
       repo: 'core',
       milestone: 17,
       sort: 'updated',
       state: 'all',
-      page: 1,
+      page: this.page || 1,
       perPage: 15
-    }).then(this.handleResponse.bind(this));
+    }).then(this.handleResponse.bind(this, more));
   };
 
-  _proto.handleResponse = function handleResponse(response) {
-    this.issues = response.data;
+  _proto.handleResponse = function handleResponse(more, response) {
+    var _this$issues;
+
+    if (more) (_this$issues = this.issues).push.apply(_this$issues, response.data);else this.issues = response.data;
     this.loading = false;
+    this.loadingMore = false;
     m.redraw();
+  };
+
+  _proto.canLoadMore = function canLoadMore() {
+    var totalIssues = this.props.milestone.closed_issues + this.props.milestone.open_issues;
+    return this.issues.length < totalIssues;
   };
 
   return IssueList;
@@ -3325,7 +3353,8 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
     }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.sidebarItems().toArray()))), m("div", {
       className: "IndexPage-results sideNavOffset"
     }, m(_IssueList__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      octokit: this.octokit
+      octokit: this.octokit,
+      milestone: this.milestone
     })))));
   };
 
@@ -3469,6 +3498,17 @@ app.initializers.add('sycho-github-milestone', function (app) {
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['Component'];
+
+/***/ }),
+
+/***/ "flarum/components/Button":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['components/Button']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Button'];
 
 /***/ }),
 

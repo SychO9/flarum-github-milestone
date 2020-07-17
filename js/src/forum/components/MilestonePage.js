@@ -40,7 +40,7 @@ export default class MilestonePage extends Page {
               <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
             </nav>
             <div className="IndexPage-results sideNavOffset">
-              <IssueList octokit={this.octokit} />
+              <IssueList octokit={this.octokit} milestone={this.milestone} />
             </div>
           </div>
         </div>

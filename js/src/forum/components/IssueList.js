@@ -1,5 +1,6 @@
 import Component from 'flarum/Component';
 import LoadingIndicator from 'flarum/components/LoadingIndicator';
+import Button from 'flarum/components/Button';
 import IssueListItem from './IssueListItem';
 
 export default class IssueList extends Component {
@@ -14,18 +15,41 @@ export default class IssueList extends Component {
       return <LoadingIndicator />;
     }
 
-    return [
-      <div className="GithubMilestone-navigation"></div>,
+    let loadingMore = <LoadingIndicator />;
+
+    if (!this.loadingMore) {
+      loadingMore = (
+        <Button className="Button" onclick={this.load.bind(this, true)}>
+          {app.translator.trans('sycho-github-milestone.forum.load_more')}
+        </Button>
+      );
+    }
+
+    if (!this.canLoadMore() && !this.loadingMore) loadingMore = '';
+
+    return (
       <div className="GithubMilestone-issues">
-        {this.issues.map((issue) => (
-          <IssueListItem issue={issue} />
-        ))}
-      </div>,
-    ];
+        <div className="GithubMilestone-navigation"></div>
+        <ul className="GithubMilestone-issuesList">
+          {this.issues.map((issue) => (
+            <li>
+              <IssueListItem issue={issue} />
+            </li>
+          ))}
+        </ul>
+        <div className="DiscussionList-loadMore">{loadingMore}</div>
+      </div>
+    );
   }
 
-  load() {
-    this.loading = true;
+  load(more) {
+    this.page = this.page || 1;
+
+    if (!more) this.loading = true;
+
+    if (more) this.loadingMore = true;
+
+    if (more && this.canLoadMore()) this.page++;
 
     this.octokit
       .request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
@@ -34,15 +58,25 @@ export default class IssueList extends Component {
         milestone: 17,
         sort: 'updated',
         state: 'all',
-        page: 1,
+        page: this.page || 1,
         perPage: 15,
       })
-      .then(this.handleResponse.bind(this));
+      .then(this.handleResponse.bind(this, more));
   }
 
-  handleResponse(response) {
-    this.issues = response.data;
+  handleResponse(more, response) {
+    if (more) this.issues.push(...response.data);
+    else this.issues = response.data;
+
     this.loading = false;
+    this.loadingMore = false;
+
     m.redraw();
+  }
+
+  canLoadMore() {
+    let totalIssues = this.props.milestone.closed_issues + this.props.milestone.open_issues;
+
+    return this.issues.length < totalIssues;
   }
 }
