@@ -1,12 +1,21 @@
 import Component from 'flarum/Component';
 import LoadingIndicator from 'flarum/components/LoadingIndicator';
 import Button from 'flarum/components/Button';
+import listItems from 'flarum/helpers/listItems';
+import ItemList from 'flarum/utils/ItemList';
+import Dropdown from 'flarum/components/Dropdown';
 import IssueListItem from './IssueListItem';
 
 export default class IssueList extends Component {
   init() {
     this.octokit = this.props.octokit;
     this.issues = [];
+    this.filters = {
+      state: {
+        value: 'all',
+        options: ['all', 'closed', 'open'],
+      },
+    };
     this.load();
   }
 
@@ -29,7 +38,10 @@ export default class IssueList extends Component {
 
     return (
       <div className="GithubMilestone-issues">
-        <div className="GithubMilestone-navigation"></div>
+        <div className="IndexPage-toolbar">
+          <ul className="IndexPage-toolbar-view">{listItems(this.viewItems().toArray())}</ul>
+          <ul className="IndexPage-toolbar-action">{listItems(this.actionItems().toArray())}</ul>
+        </div>
         <ul className="GithubMilestone-issuesList">
           {this.issues.map((issue) => (
             <li>
@@ -57,7 +69,7 @@ export default class IssueList extends Component {
         repo: 'core',
         milestone: 17,
         sort: 'updated',
-        state: 'all',
+        state: this.filters.state.value,
         page: this.page || 1,
         perPage: 15,
       })
@@ -74,9 +86,70 @@ export default class IssueList extends Component {
     m.redraw();
   }
 
+  changeState(state) {
+    this.filters.state.value = state;
+    this.page = 1;
+
+    this.load();
+  }
+
+  refresh() {
+    this.page = 1;
+
+    this.load();
+  }
+
   canLoadMore() {
-    let totalIssues = this.props.milestone.closed_issues + this.props.milestone.open_issues;
+    let totalIssues;
+
+    switch (this.filters.state.value) {
+      case 'all':
+        totalIssues = this.props.milestone.closed_issues + this.props.milestone.open_issues;
+        break;
+      default:
+        totalIssues = this.props.milestone[`${this.filters.state.value}_issues`];
+    }
 
     return this.issues.length < totalIssues;
+  }
+
+  viewItems() {
+    const items = new ItemList();
+
+    items.add(
+      'state',
+      Dropdown.component({
+        buttonClassName: 'Button',
+        label: app.translator.trans(`sycho-github-milestone.forum.${this.filters.state.value}`),
+        children: this.filters.state.options.map((state) => {
+          const active = state === this.filters.state.value;
+
+          return Button.component({
+            children: app.translator.trans(`sycho-github-milestone.forum.${state}`),
+            icon: active ? 'fas fa-check' : ' ',
+            onclick: this.changeState.bind(this, state),
+            active,
+          });
+        }),
+      })
+    );
+
+    return items;
+  }
+
+  actionItems() {
+    const items = new ItemList();
+
+    items.add(
+      'refresh',
+      Button.component({
+        title: app.translator.trans('core.forum.index.refresh_tooltip'),
+        icon: 'fas fa-sync',
+        className: 'Button Button--icon',
+        onclick: this.refresh.bind(this),
+      })
+    );
+
+    return items;
   }
 }

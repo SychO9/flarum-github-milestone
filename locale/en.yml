@@ -2,7 +2,8 @@ sycho-github-milestone:
   forum:
     title: Milestone
     last_updated: Last updated {time}
-    closed: '{amount} Closed'
-    open: '{amount} Open'
+    closed: Closed
+    open: Open
+    all: All
     complete: '{progress} Complete'
     load_more: => core.forum.discussion_list.load_more_button

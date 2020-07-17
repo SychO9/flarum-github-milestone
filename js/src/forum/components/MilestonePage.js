@@ -62,21 +62,21 @@ export default class MilestonePage extends Page {
     items.add(
       'openIssues',
       <div className="GithubMilestone-detailsItem">
-        {app.translator.trans('sycho-github-milestone.forum.open', { amount: <strong>{this.milestone.open_issues}</strong> })}
+        <strong>{this.milestone.open_issues}</strong> {app.translator.trans('sycho-github-milestone.forum.open')}
       </div>
     );
 
     items.add(
       'closedIssues',
       <div className="GithubMilestone-detailsItem">
-        {app.translator.trans('sycho-github-milestone.forum.closed', { amount: <strong>{this.milestone.closed_issues}</strong> })}
+        <strong>{this.milestone.closed_issues}</strong> {app.translator.trans('sycho-github-milestone.forum.closed')}
       </div>
     );
 
     items.add(
       'progress',
       <div className="GithubMilestone-detailsItem">
-        {app.translator.trans('sycho-github-milestone.forum.complete', { progress: <strong>{this.progress}%</strong> })}
+        <strong>{this.progress}%</strong> {app.translator.trans('sycho-github-milestone.forum.complete')}
       </div>
     );
 
