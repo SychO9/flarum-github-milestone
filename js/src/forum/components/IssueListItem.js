@@ -21,7 +21,9 @@ export default class IssueListItem extends Component {
             <h3 className="DiscussionListItem-title">{issue.title}</h3>
             <ul className="DiscussionListItem-info">{listItems(this.infoItems(issue).toArray())}</ul>
           </a>
-          <span className="DiscussionListItem-count" title="">{issue.comments}</span>
+          <span className="DiscussionListItem-count" title="">
+            {issue.comments}
+          </span>
         </div>
       </div>
     );
@@ -35,10 +37,7 @@ export default class IssueListItem extends Component {
 
     if (issue.state === 'closed') type.state = 'Badge--issueClosed';
 
-    items.add(
-      'state',
-      <span className={`Badge ${type.state}`}>{icon(type.icon)}</span>
-    );
+    items.add('state', <span className={`Badge ${type.state}`}>{icon(type.icon)}</span>);
 
     return items;
   }
@@ -53,11 +52,13 @@ export default class IssueListItem extends Component {
 
     items.add(
       'tags',
-      tagsLabel(issue.labels.map(label => {
-        label.color = '#'+label.color;
+      tagsLabel(
+        issue.labels.map((label) => {
+          label.color = '#' + label.color;
 
-        return new Tag({ attributes: label });
-      })),
+          return new Tag({ attributes: label });
+        })
+      )
     );
 
     return items;

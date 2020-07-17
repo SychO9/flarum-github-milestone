@@ -22,5 +22,5 @@ app.initializers.add('sycho-github-milestone', (app) => {
     );
 
     return navItems;
-  })
+  });
 });

@@ -30,10 +30,8 @@ export default class MilestonePage extends Page {
         <Hero
           title={this.milestone.title}
           subtitle={[
-            <div className="GithubMilestone-details">
-              {listItems(this.milestoneDetails().toArray())}
-            </div>,
-            <ProgressBar progress={this.progress} />
+            <div className="GithubMilestone-details">{listItems(this.milestoneDetails().toArray())}</div>,
+            <ProgressBar progress={this.progress} />,
           ]}
         />
         <div className="container">
@@ -56,7 +54,8 @@ export default class MilestonePage extends Page {
     items.add(
       'updatedAt',
       <div className="GithubMilestone-detailsItem">
-        <strong>{icon('fas fa-clock')}</strong> {app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(this.milestone.updated_at) })}
+        <strong>{icon('fas fa-clock')}</strong>{' '}
+        {app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(this.milestone.updated_at) })}
       </div>
     );
 
@@ -87,16 +86,18 @@ export default class MilestonePage extends Page {
   load() {
     this.loading = true;
 
-    this.octokit.issues.getMilestone({
-      owner: 'flarum',
-      repo: 'core',
-      milestone_number: 17,
-    }).then(this.handleResponse.bind(this));
+    this.octokit.issues
+      .getMilestone({
+        owner: 'flarum',
+        repo: 'core',
+        milestone_number: 17,
+      })
+      .then(this.handleResponse.bind(this));
   }
 
   handleResponse(response) {
     this.milestone = response.data;
-    this.progress = parseInt(this.milestone.closed_issues*100/(this.milestone.closed_issues+this.milestone.open_issues));
+    this.progress = parseInt((this.milestone.closed_issues * 100) / (this.milestone.closed_issues + this.milestone.open_issues));
     this.loading = false;
     m.redraw();
   }

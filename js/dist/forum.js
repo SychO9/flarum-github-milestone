@@ -3333,7 +3333,7 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
     var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default.a();
     items.add('updatedAt', m("div", {
       className: "GithubMilestone-detailsItem"
-    }, m("strong", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7___default()('fas fa-clock')), " ", app.translator.trans('sycho-github-milestone.forum.last_updated', {
+    }, m("strong", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7___default()('fas fa-clock')), ' ', app.translator.trans('sycho-github-milestone.forum.last_updated', {
       time: flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_6___default()(this.milestone.updated_at)
     })));
     items.add('openIssues', m("div", {
