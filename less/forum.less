@@ -11,12 +11,28 @@
 
 .GithubMilestone-progress {
   height: 8px;
-  background: @body-bg;
+  background: @control-bg;
   border-radius: @border-radius;
 }
 
+.GithubMilestone-progress--mini {
+  display: inline-block;
+  width: 100px;
+  margin: 0 6px;
+}
+
+.GithubMilestone-progress--alternate {
+  background: @body-bg;
+}
+
+.GithubMilestone-progress--fancy {
+  .GithubMilestone-progressBar {
+    background: #65d137 linear-gradient(to right, #2f7911, transparent);
+  }
+}
+
 .GithubMilestone-progressBar {
-  background: #65d137 linear-gradient(to right, #2f7911, transparent);
+  background: @control-color;
   border-radius: @border-radius;
   height: 100%;
 }
@@ -29,6 +45,10 @@
 
 .Badge--issueOpen {
   background: #41a00c;
+}
+
+.item-tasks {
+  margin-left: 6px;
 }
 
 .Badge--issueClosed {

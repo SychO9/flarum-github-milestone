@@ -31,7 +31,7 @@ export default class MilestonePage extends Page {
           title={this.milestone.title}
           subtitle={[
             <div className="GithubMilestone-details">{listItems(this.milestoneDetails().toArray())}</div>,
-            <ProgressBar progress={this.progress} />,
+            <ProgressBar className="GithubMilestone-progress--fancy GithubMilestone-progress--alternate" progress={this.progress} />,
           ]}
         />
         <div className="container">

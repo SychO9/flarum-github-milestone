@@ -3259,6 +3259,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_tags_helpers_tagsLabel__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_tags_helpers_tagsLabel__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var flarum_tags_models_Tag__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/tags/models/Tag */ "flarum/tags/models/Tag");
 /* harmony import */ var flarum_tags_models_Tag__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_tags_models_Tag__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _ProgressBar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ProgressBar */ "./src/forum/components/ProgressBar.js");
+
 
 
 
@@ -3304,6 +3306,15 @@ var IssueListItem = /*#__PURE__*/function (_Component) {
     }, issue.comments)));
   };
 
+  _proto.getTasks = function getTasks() {
+    var pendingTasksCount = (this.props.issue.body.match(/\r\n- \[ \]/g) || []).length;
+    var doneTasksCount = (this.props.issue.body.match(/\r\n- \[x\]/g) || []).length;
+    return {
+      current: doneTasksCount,
+      total: doneTasksCount + pendingTasksCount
+    };
+  };
+
   _proto.badgeItems = function badgeItems(issue) {
     var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default.a();
     var type = {
@@ -3320,9 +3331,21 @@ var IssueListItem = /*#__PURE__*/function (_Component) {
 
   _proto.infoItems = function infoItems(issue) {
     var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default.a();
-    items.add('terminalPost', m("span", null, app.translator.trans('sycho-github-milestone.forum.last_updated', {
+    items.add('terminalPost', m("span", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_5___default()('far fa-clock'), " ", app.translator.trans('sycho-github-milestone.forum.last_updated', {
       time: flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_2___default()(issue.updated_at)
     })));
+    var tasks = this.getTasks();
+
+    if (tasks.total) {
+      items.add('tasks', m("span", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_5___default()('fas fa-tasks'), ' ', app.translator.trans('sycho-github-milestone.forum.tasks_done', {
+        number: tasks.current,
+        total: tasks.total
+      }), m(_ProgressBar__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        progress: tasks.current * 100 / tasks.total,
+        mini: true
+      })));
+    }
+
     items.add('tags', flarum_tags_helpers_tagsLabel__WEBPACK_IMPORTED_MODULE_6___default()(issue.labels.map(function (label) {
       label.color = '#' + label.color;
       return new flarum_tags_models_Tag__WEBPACK_IMPORTED_MODULE_7___default.a({
@@ -3411,6 +3434,7 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
       subtitle: [m("div", {
         className: "GithubMilestone-details"
       }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3___default()(this.milestoneDetails().toArray())), m(_ProgressBar__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        className: "GithubMilestone-progress--fancy GithubMilestone-progress--alternate",
         progress: this.progress
       })]
     }), m("div", {
@@ -3495,8 +3519,10 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
   var _proto = ProgressBar.prototype;
 
   _proto.view = function view() {
+    var className = 'GithubMilestone-progress ' + (this.props.className || '');
+    if (this.props.mini) className += 'GithubMilestone-progress--mini';
     return m("div", {
-      className: "GithubMilestone-progress"
+      className: className
     }, m("div", {
       className: "GithubMilestone-progressBar",
       style: {

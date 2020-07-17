@@ -5,6 +5,7 @@ import ItemList from 'flarum/utils/ItemList';
 import icon from 'flarum/helpers/icon';
 import tagsLabel from 'flarum/tags/helpers/tagsLabel';
 import Tag from 'flarum/tags/models/Tag';
+import ProgressBar from './ProgressBar';
 
 export default class IssueListItem extends Component {
   view() {
@@ -29,6 +30,16 @@ export default class IssueListItem extends Component {
     );
   }
 
+  getTasks() {
+    const pendingTasksCount = (this.props.issue.body.match(/\r\n- \[ \]/g) || []).length;
+    const doneTasksCount = (this.props.issue.body.match(/\r\n- \[x\]/g) || []).length;
+
+    return {
+      current: doneTasksCount,
+      total: doneTasksCount + pendingTasksCount,
+    };
+  }
+
   badgeItems(issue) {
     const items = new ItemList();
     const type = { icon: 'fas fa-exclamation', state: 'Badge--issueOpen' };
@@ -47,8 +58,26 @@ export default class IssueListItem extends Component {
 
     items.add(
       'terminalPost',
-      <span>{app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(issue.updated_at) })}</span>
+      <span>
+        {icon('far fa-clock')} {app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(issue.updated_at) })}
+      </span>
     );
+
+    const tasks = this.getTasks();
+
+    if (tasks.total) {
+      items.add(
+        'tasks',
+        <span>
+          {icon('fas fa-tasks')}{' '}
+          {app.translator.trans('sycho-github-milestone.forum.tasks_done', {
+            number: tasks.current,
+            total: tasks.total,
+          })}
+          <ProgressBar progress={(tasks.current * 100) / tasks.total} mini={true} />
+        </span>
+      );
+    }
 
     items.add(
       'tags',
