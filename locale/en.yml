@@ -1,0 +1,7 @@
+sycho-github-milestone:
+  forum:
+    title: Milestone
+    last_updated: Last updated {time}
+    closed: '{amount} Closed'
+    open: '{amount} Open'
+    complete: '{progress} Complete'
