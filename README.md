@@ -4,6 +4,8 @@
 ![mit license](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square&color=green)
 ![downloads](https://img.shields.io/packagist/dt/sycho/flarum-github-milestone?color=%23f28d1a&style=flat-square)
 
+[Flarum](https://flarum.org) extension that shows the status and activity of a github milestone.
+
 ## Installation
 ```ssh
 $ composer require sycho/flarum-action-log
