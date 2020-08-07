@@ -8,12 +8,12 @@
 
 ## Installation
 ```ssh
-$ composer require sycho/flarum-action-log
+$ composer require sycho/flarum-github-milestone
 ```
 
 ## Updating
 ```ssh
-$ composer update sycho/flarum-action-log
+$ composer update sycho/flarum-github-milestone
 ```
 
 ## Links
