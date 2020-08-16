@@ -24,30 +24,31 @@ export default class MilestonePage extends Page {
     };
     this.milestone = {};
     this.progress = 0;
+
     this.load();
   }
 
   view() {
-    if (this.loading) {
-      return <LoadingIndicator />;
-    }
-
     return (
       <div className="IndexPage">
-        <Hero
-          title={this.milestone.title}
-          subtitle={[
-            <div className="GithubMilestone-details">{listItems(this.milestoneDetails().toArray())}</div>,
-            <ProgressBar className="GithubMilestone-progress--fancy GithubMilestone-progress--alternate" progress={this.progress} />,
-          ]}
-        />
+        {this.loading ? (
+          <Hero title={<LoadingIndicator />} />
+        ) : (
+          <Hero
+            title={this.milestone.title}
+            subtitle={[
+              <div className="GithubMilestone-details">{listItems(this.milestoneDetails().toArray())}</div>,
+              <ProgressBar className="GithubMilestone-progress--fancy GithubMilestone-progress--alternate" progress={this.progress} />,
+            ]}
+          />
+        )}
         <div className="container">
           <div className="sideNavContainer">
             <nav className="IndexPage-nav sideNav">
               <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
             </nav>
             <div className="IndexPage-results sideNavOffset">
-              <IssueList octokit={this.octokit} milestone={this.milestone} />
+              {this.loading ? <LoadingIndicator /> : <IssueList octokit={this.octokit} milestone={this.milestone} />}
             </div>
           </div>
         </div>

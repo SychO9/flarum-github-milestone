@@ -3462,13 +3462,11 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
   };
 
   _proto.view = function view() {
-    if (this.loading) {
-      return m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6___default.a, null);
-    }
-
     return m("div", {
       className: "IndexPage"
-    }, m(_Hero__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    }, this.loading ? m(_Hero__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      title: m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6___default.a, null)
+    }) : m(_Hero__WEBPACK_IMPORTED_MODULE_12__["default"], {
       title: this.milestone.title,
       subtitle: [m("div", {
         className: "GithubMilestone-details"
@@ -3484,7 +3482,7 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
       className: "IndexPage-nav sideNav"
     }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype.sidebarItems().toArray()))), m("div", {
       className: "IndexPage-results sideNavOffset"
-    }, m(_IssueList__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }, this.loading ? m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6___default.a, null) : m(_IssueList__WEBPACK_IMPORTED_MODULE_9__["default"], {
       octokit: this.octokit,
       milestone: this.milestone
     })))));
