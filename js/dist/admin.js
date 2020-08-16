@@ -151,6 +151,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
 /* harmony import */ var flarum_components_SettingsModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/SettingsModal */ "flarum/components/SettingsModal");
 /* harmony import */ var flarum_components_SettingsModal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_SettingsModal__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_Select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Select */ "flarum/components/Select");
+/* harmony import */ var flarum_components_Select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Select__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -168,10 +171,20 @@ var GithubMilestoneSettingsModal = /*#__PURE__*/function (_SettingsModal) {
 
     this.repository = this.setting('sycho-github-milestone.repository');
     this.milestoneId = this.setting('sycho-github-milestone.milestone_id');
+    this.defaultFilter = this.setting('sycho-github-milestone.default_filter', 'all');
+    this.filters = {
+      all: app.translator.trans('sycho-github-milestone.admin.all'),
+      open: app.translator.trans('sycho-github-milestone.admin.open'),
+      closed: app.translator.trans('sycho-github-milestone.admin.closed')
+    };
   };
 
   _proto.title = function title() {
     return app.translator.trans('core.admin.extensions.settings_button');
+  };
+
+  _proto.className = function className() {
+    return 'GithubMilestoneSettingsModal Modal--small';
   };
 
   _proto.form = function form() {
@@ -189,6 +202,12 @@ var GithubMilestoneSettingsModal = /*#__PURE__*/function (_SettingsModal) {
       className: "FormControl",
       value: this.milestoneId(),
       oninput: m.withAttr('value', this.milestoneId)
+    })), m("div", {
+      className: "Form-group"
+    }, m("label", null, app.translator.trans('sycho-github-milestone.admin.default_filter')), m(flarum_components_Select__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      options: this.filters,
+      onchange: this.defaultFilter,
+      value: this.defaultFilter()
     }))];
   };
 
@@ -196,6 +215,17 @@ var GithubMilestoneSettingsModal = /*#__PURE__*/function (_SettingsModal) {
 }(flarum_components_SettingsModal__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 
+
+/***/ }),
+
+/***/ "flarum/components/Select":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['components/Select']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Select'];
 
 /***/ }),
 

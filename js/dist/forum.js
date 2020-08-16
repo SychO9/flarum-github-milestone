@@ -3136,7 +3136,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
     this.issues = [];
     this.filters = {
       state: {
-        value: 'all',
+        value: app.data['sycho-github-milestone.default_filter'] || 'all',
         options: ['all', 'closed', 'open']
       }
     };

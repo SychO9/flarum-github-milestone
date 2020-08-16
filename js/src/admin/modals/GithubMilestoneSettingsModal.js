@@ -1,4 +1,5 @@
 import SettingsModal from 'flarum/components/SettingsModal';
+import Select from 'flarum/components/Select';
 
 export default class GithubMilestoneSettingsModal extends SettingsModal {
   init() {
@@ -6,10 +7,21 @@ export default class GithubMilestoneSettingsModal extends SettingsModal {
 
     this.repository = this.setting('sycho-github-milestone.repository');
     this.milestoneId = this.setting('sycho-github-milestone.milestone_id');
+    this.defaultFilter = this.setting('sycho-github-milestone.default_filter', 'all');
+
+    this.filters = {
+      all: app.translator.trans('sycho-github-milestone.admin.all'),
+      open: app.translator.trans('sycho-github-milestone.admin.open'),
+      closed: app.translator.trans('sycho-github-milestone.admin.closed'),
+    };
   }
 
   title() {
     return app.translator.trans('core.admin.extensions.settings_button');
+  }
+
+  className() {
+    return 'GithubMilestoneSettingsModal Modal--small';
   }
 
   form() {
@@ -23,9 +35,15 @@ export default class GithubMilestoneSettingsModal extends SettingsModal {
           placeholder={app.translator.trans('sycho-github-milestone.admin.repository_example')}
         />
       </div>,
+
       <div className="Form-group">
         <label>{app.translator.trans('sycho-github-milestone.admin.milestone')}</label>
         <input type="number" className="FormControl" value={this.milestoneId()} oninput={m.withAttr('value', this.milestoneId)} />
+      </div>,
+
+      <div className="Form-group">
+        <label>{app.translator.trans('sycho-github-milestone.admin.default_filter')}</label>
+        <Select options={this.filters} onchange={this.defaultFilter} value={this.defaultFilter()} />
       </div>,
     ];
   }

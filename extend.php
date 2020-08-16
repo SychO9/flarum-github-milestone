@@ -21,5 +21,5 @@ return [
 
     (new FoF\Extend\Extend\ExtensionSettings())
         ->setPrefix('sycho-github-milestone.')
-        ->addKeys(['repository', 'milestone_id']),
+        ->addKeys(['repository', 'milestone_id', 'default_filter']),
 ];
