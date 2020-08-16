@@ -5,6 +5,8 @@ import LinkButton from 'flarum/components/LinkButton';
 import MilestonePage from './components/MilestonePage';
 
 app.initializers.add('sycho-github-milestone', (app) => {
+  if (!app.data['sycho-github-milestone.repository'] || !app.data['sycho-github-milestone.milestone_id']) return;
+
   app.routes.githubMilestone = {
     path: '/milestone',
     component: MilestonePage.component(),

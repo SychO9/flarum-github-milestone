@@ -101,6 +101,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _extends; });
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js ***!
@@ -3151,9 +3181,9 @@ var IssueList = /*#__PURE__*/function (_Component) {
     if (more) this.loadingMore = true;
     if (more && this.canLoadMore()) this.page++;
     this.octokit.request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
-      owner: 'flarum',
-      repo: 'core',
-      milestone: 17,
+      owner: this.props.milestone.repository.owner,
+      repo: this.props.milestone.repository.name,
+      milestone: this.props.milestone.number,
       sort: 'updated',
       state: this.filters.state.value,
       page: this.page || 1,
@@ -3372,25 +3402,27 @@ var IssueListItem = /*#__PURE__*/function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MilestonePage; });
-/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
-/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/Page */ "flarum/components/Page");
-/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Page__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/helpers/listItems */ "flarum/helpers/listItems");
-/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/utils/ItemList */ "flarum/utils/ItemList");
-/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/LoadingIndicator */ "flarum/components/LoadingIndicator");
-/* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/utils/humanTime */ "flarum/utils/humanTime");
-/* harmony import */ var flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/helpers/icon */ "flarum/helpers/icon");
-/* harmony import */ var flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _IssueList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./IssueList */ "./src/forum/components/IssueList.js");
-/* harmony import */ var _octokit_rest__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @octokit/rest */ "./node_modules/@octokit/rest/dist-web/index.js");
-/* harmony import */ var _ProgressBar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ProgressBar */ "./src/forum/components/ProgressBar.js");
-/* harmony import */ var _Hero__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Hero */ "./src/forum/components/Hero.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Page */ "flarum/components/Page");
+/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Page__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/helpers/listItems */ "flarum/helpers/listItems");
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/utils/ItemList */ "flarum/utils/ItemList");
+/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/components/LoadingIndicator */ "flarum/components/LoadingIndicator");
+/* harmony import */ var flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/utils/humanTime */ "flarum/utils/humanTime");
+/* harmony import */ var flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flarum/helpers/icon */ "flarum/helpers/icon");
+/* harmony import */ var flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _IssueList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./IssueList */ "./src/forum/components/IssueList.js");
+/* harmony import */ var _octokit_rest__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @octokit/rest */ "./node_modules/@octokit/rest/dist-web/index.js");
+/* harmony import */ var _ProgressBar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ProgressBar */ "./src/forum/components/ProgressBar.js");
+/* harmony import */ var _Hero__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hero */ "./src/forum/components/Hero.js");
+
 
 
 
@@ -3405,7 +3437,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var MilestonePage = /*#__PURE__*/function (_Page) {
-  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(MilestonePage, _Page);
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(MilestonePage, _Page);
 
   function MilestonePage() {
     return _Page.apply(this, arguments) || this;
@@ -3416,7 +3448,14 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
   _proto.init = function init() {
     _Page.prototype.init.call(this);
 
-    this.octokit = new _octokit_rest__WEBPACK_IMPORTED_MODULE_9__["Octokit"]();
+    this.octokit = new _octokit_rest__WEBPACK_IMPORTED_MODULE_10__["Octokit"]();
+    this.settings = {
+      repository: {
+        owner: app.data['sycho-github-milestone.repository'].split('/')[0],
+        name: app.data['sycho-github-milestone.repository'].split('/')[1]
+      },
+      milestone: app.data['sycho-github-milestone.milestone_id']
+    };
     this.milestone = {};
     this.progress = 0;
     this.load();
@@ -3424,16 +3463,16 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
 
   _proto.view = function view() {
     if (this.loading) {
-      return m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default.a, null);
+      return m(flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6___default.a, null);
     }
 
     return m("div", {
       className: "IndexPage"
-    }, m(_Hero__WEBPACK_IMPORTED_MODULE_11__["default"], {
+    }, m(_Hero__WEBPACK_IMPORTED_MODULE_12__["default"], {
       title: this.milestone.title,
       subtitle: [m("div", {
         className: "GithubMilestone-details"
-      }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3___default()(this.milestoneDetails().toArray())), m(_ProgressBar__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(this.milestoneDetails().toArray())), m(_ProgressBar__WEBPACK_IMPORTED_MODULE_11__["default"], {
         className: "GithubMilestone-progress--fancy GithubMilestone-progress--alternate",
         progress: this.progress
       })]
@@ -3443,20 +3482,20 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
       className: "sideNavContainer"
     }, m("nav", {
       className: "IndexPage-nav sideNav"
-    }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_3___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.sidebarItems().toArray()))), m("div", {
+    }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype.sidebarItems().toArray()))), m("div", {
       className: "IndexPage-results sideNavOffset"
-    }, m(_IssueList__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }, m(_IssueList__WEBPACK_IMPORTED_MODULE_9__["default"], {
       octokit: this.octokit,
       milestone: this.milestone
     })))));
   };
 
   _proto.milestoneDetails = function milestoneDetails() {
-    var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default.a();
+    var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5___default.a();
     items.add('updatedAt', m("div", {
       className: "GithubMilestone-detailsItem"
-    }, m("strong", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_7___default()('fas fa-clock')), ' ', app.translator.trans('sycho-github-milestone.forum.last_updated', {
-      time: flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_6___default()(this.milestone.updated_at)
+    }, m("strong", null, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_8___default()('fas fa-clock')), ' ', app.translator.trans('sycho-github-milestone.forum.last_updated', {
+      time: flarum_utils_humanTime__WEBPACK_IMPORTED_MODULE_7___default()(this.milestone.updated_at)
     })));
     items.add('openIssues', m("div", {
       className: "GithubMilestone-detailsItem"
@@ -3473,21 +3512,23 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
   _proto.load = function load() {
     this.loading = true;
     this.octokit.issues.getMilestone({
-      owner: 'flarum',
-      repo: 'core',
-      milestone_number: 17
+      owner: this.settings.repository.owner,
+      repo: this.settings.repository.name,
+      milestone_number: this.settings.milestone
     }).then(this.handleResponse.bind(this));
   };
 
   _proto.handleResponse = function handleResponse(response) {
-    this.milestone = response.data;
-    this.progress = parseInt(this.milestone.closed_issues * 100 / (this.milestone.closed_issues + this.milestone.open_issues));
+    this.milestone = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+      repository: this.settings.repository
+    }, response.data);
+    this.progress = this.milestone.closed_issues * 100 / (this.milestone.closed_issues + this.milestone.open_issues);
     this.loading = false;
     m.redraw();
   };
 
   return MilestonePage;
-}(flarum_components_Page__WEBPACK_IMPORTED_MODULE_1___default.a);
+}(flarum_components_Page__WEBPACK_IMPORTED_MODULE_2___default.a);
 
 
 
@@ -3563,6 +3604,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 app.initializers.add('sycho-github-milestone', function (app) {
+  if (!app.data['sycho-github-milestone.repository'] || !app.data['sycho-github-milestone.milestone_id']) return;
   app.routes.githubMilestone = {
     path: '/milestone',
     component: _components_MilestonePage__WEBPACK_IMPORTED_MODULE_3__["default"].component()

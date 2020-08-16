@@ -67,9 +67,9 @@ export default class IssueList extends Component {
 
     this.octokit
       .request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
-        owner: 'flarum',
-        repo: 'core',
-        milestone: 17,
+        owner: this.props.milestone.repository.owner,
+        repo: this.props.milestone.repository.name,
+        milestone: this.props.milestone.number,
         sort: 'updated',
         state: this.filters.state.value,
         page: this.page || 1,

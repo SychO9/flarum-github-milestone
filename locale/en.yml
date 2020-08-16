@@ -1,4 +1,8 @@
 sycho-github-milestone:
+  admin:
+    repository: GitHub Repository
+    repository_example: 'example: flarum/core'
+    milestone: Milestone ID
   forum:
     title: Milestone
     last_updated: Last updated {time}

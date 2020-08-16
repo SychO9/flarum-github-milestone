@@ -15,6 +15,13 @@ export default class MilestonePage extends Page {
     super.init();
 
     this.octokit = new Octokit();
+    this.settings = {
+      repository: {
+        owner: app.data['sycho-github-milestone.repository'].split('/')[0],
+        name: app.data['sycho-github-milestone.repository'].split('/')[1],
+      },
+      milestone: app.data['sycho-github-milestone.milestone_id'],
+    };
     this.milestone = {};
     this.progress = 0;
     this.load();
@@ -88,16 +95,16 @@ export default class MilestonePage extends Page {
 
     this.octokit.issues
       .getMilestone({
-        owner: 'flarum',
-        repo: 'core',
-        milestone_number: 17,
+        owner: this.settings.repository.owner,
+        repo: this.settings.repository.name,
+        milestone_number: this.settings.milestone,
       })
       .then(this.handleResponse.bind(this));
   }
 
   handleResponse(response) {
-    this.milestone = response.data;
-    this.progress = parseInt((this.milestone.closed_issues * 100) / (this.milestone.closed_issues + this.milestone.open_issues));
+    this.milestone = { repository: this.settings.repository, ...response.data };
+    this.progress = (this.milestone.closed_issues * 100) / (this.milestone.closed_issues + this.milestone.open_issues);
     this.loading = false;
     m.redraw();
   }
