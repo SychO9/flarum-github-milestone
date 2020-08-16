@@ -3522,7 +3522,7 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
     this.milestone = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
       repository: this.settings.repository
     }, response.data);
-    this.progress = this.milestone.closed_issues * 100 / (this.milestone.closed_issues + this.milestone.open_issues);
+    this.progress = Math.round(this.milestone.closed_issues * 100 / (this.milestone.closed_issues + this.milestone.open_issues));
     this.loading = false;
     m.redraw();
   };
