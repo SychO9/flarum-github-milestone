@@ -1,9 +1,10 @@
 import SettingsModal from 'flarum/components/SettingsModal';
 import Select from 'flarum/components/Select';
+import withAttr from 'flarum/utils/withAttr';
 
 export default class GithubMilestoneSettingsModal extends SettingsModal {
-  init() {
-    super.init();
+  oninit(vnode) {
+    super.oninit(vnode);
 
     this.repository = this.setting('sycho-github-milestone.repository');
     this.milestoneId = this.setting('sycho-github-milestone.milestone_id');
@@ -31,14 +32,14 @@ export default class GithubMilestoneSettingsModal extends SettingsModal {
         <input
           className="FormControl"
           value={this.repository()}
-          oninput={m.withAttr('value', this.repository)}
+          oninput={withAttr('value', this.repository)}
           placeholder={app.translator.trans('sycho-github-milestone.admin.repository_example')}
         />
       </div>,
 
       <div className="Form-group">
         <label>{app.translator.trans('sycho-github-milestone.admin.milestone')}</label>
-        <input type="number" className="FormControl" value={this.milestoneId()} oninput={m.withAttr('value', this.milestoneId)} />
+        <input type="number" className="FormControl" value={this.milestoneId()} oninput={withAttr('value', this.milestoneId)} />
       </div>,
 
       <div className="Form-group">

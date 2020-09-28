@@ -3,13 +3,11 @@ import humanTime from 'flarum/utils/humanTime';
 import listItems from 'flarum/helpers/listItems';
 import ItemList from 'flarum/utils/ItemList';
 import icon from 'flarum/helpers/icon';
-import tagsLabel from 'flarum/tags/helpers/tagsLabel';
-import Tag from 'flarum/tags/models/Tag';
 import ProgressBar from './ProgressBar';
 
 export default class IssueListItem extends Component {
   view() {
-    const issue = this.props.issue;
+    const issue = this.attrs.issue;
 
     return (
       <div className="DiscussionListItem">
@@ -31,8 +29,8 @@ export default class IssueListItem extends Component {
   }
 
   getTasks() {
-    const pendingTasksCount = (this.props.issue.body.match(/\r\n- \[ \]/g) || []).length;
-    const doneTasksCount = (this.props.issue.body.match(/\r\n- \[x\]/g) || []).length;
+    const pendingTasksCount = (this.attrs.issue.body.match(/\r\n- \[ \]/g) || []).length;
+    const doneTasksCount = (this.attrs.issue.body.match(/\r\n- \[x\]/g) || []).length;
 
     return {
       current: doneTasksCount,
@@ -80,14 +78,14 @@ export default class IssueListItem extends Component {
     }
 
     items.add(
-      'tags',
-      tagsLabel(
-        issue.labels.map((label) => {
-          label.color = '#' + label.color;
-
-          return new Tag({ attributes: label });
-        })
-      )
+      'issues',
+      <span className="IssuesLabel">
+        {issue.labels.map((label) => (
+          <span className="IssueLabel colored" style={{ backgroundColor: `#${label.color}` }}>
+            <span className="IssueLabel-text">{label.name}</span>
+          </span>
+        ))}
+      </span>
     );
 
     return items;

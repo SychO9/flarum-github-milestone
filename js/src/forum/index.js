@@ -9,17 +9,15 @@ app.initializers.add('sycho-github-milestone', (app) => {
 
   app.routes.githubMilestone = {
     path: '/milestone',
-    component: MilestonePage.component(),
+    component: MilestonePage,
   };
 
   extend(IndexPage.prototype, 'navItems', (navItems) => {
     navItems.add(
       'githubMilestone',
-      LinkButton.component({
-        href: app.route('githubMilestone'),
-        children: app.translator.trans('sycho-github-milestone.forum.title'),
-        icon: 'fab fa-github-alt',
-      }),
+      <LinkButton href={app.route('githubMilestone')} icon="fab fa-github-alt">
+        {app.translator.trans('sycho-github-milestone.forum.title')}
+      </LinkButton>,
       100
     );
 

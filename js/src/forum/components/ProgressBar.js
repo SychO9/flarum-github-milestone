@@ -2,9 +2,9 @@ import Component from 'flarum/Component';
 
 export default class ProgressBar extends Component {
   view() {
-    let className = 'GithubMilestone-progress ' + (this.props.className || '');
+    let className = 'GithubMilestone-progress ' + (this.attrs.className || '');
 
-    if (this.props.mini) className += 'GithubMilestone-progress--mini';
+    if (this.attrs.mini) className += 'GithubMilestone-progress--mini';
 
     return (
       <div className={className}>
@@ -14,6 +14,6 @@ export default class ProgressBar extends Component {
   }
 
   getProgress() {
-    return this.props.progress;
+    return this.attrs.progress;
   }
 }

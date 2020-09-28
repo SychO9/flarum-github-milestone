@@ -7,8 +7,10 @@ import Dropdown from 'flarum/components/Dropdown';
 import IssueListItem from './IssueListItem';
 
 export default class IssueList extends Component {
-  init() {
-    this.octokit = this.props.octokit;
+  oninit(vnode) {
+    super.oninit(vnode);
+
+    this.octokit = this.attrs.octokit;
     this.issues = [];
     this.filters = {
       state: {
@@ -68,9 +70,9 @@ export default class IssueList extends Component {
 
     this.octokit
       .request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
-        owner: this.props.milestone.repository.owner,
-        repo: this.props.milestone.repository.name,
-        milestone: this.props.milestone.number,
+        owner: this.attrs.milestone.repository.owner,
+        repo: this.attrs.milestone.repository.name,
+        milestone: this.attrs.milestone.number,
         sort: 'updated',
         state: this.filters.state.value,
         page: this.page || 1,
@@ -107,10 +109,10 @@ export default class IssueList extends Component {
 
     switch (this.filters.state.value) {
       case 'all':
-        totalIssues = this.props.milestone.closed_issues + this.props.milestone.open_issues;
+        totalIssues = this.attrs.milestone.closed_issues + this.attrs.milestone.open_issues;
         break;
       default:
-        totalIssues = this.props.milestone[`${this.filters.state.value}_issues`];
+        totalIssues = this.attrs.milestone[`${this.filters.state.value}_issues`];
     }
 
     return this.issues.length < totalIssues;
@@ -121,20 +123,17 @@ export default class IssueList extends Component {
 
     items.add(
       'state',
-      Dropdown.component({
-        buttonClassName: 'Button',
-        label: app.translator.trans(`sycho-github-milestone.forum.${this.filters.state.value}`),
-        children: this.filters.state.options.map((state) => {
+      <Dropdown buttonClassName="Button" label={app.translator.trans(`sycho-github-milestone.forum.${this.filters.state.value}`)}>
+        {this.filters.state.options.map((state) => {
           const active = state === this.filters.state.value;
 
-          return Button.component({
-            children: app.translator.trans(`sycho-github-milestone.forum.${state}`),
-            icon: active ? 'fas fa-check' : ' ',
-            onclick: this.changeState.bind(this, state),
-            active,
-          });
-        }),
-      })
+          return (
+            <Button icon={active ? 'fas fa-check' : ' '} onclick={this.changeState.bind(this, state)} active={active}>
+              {app.translator.trans(`sycho-github-milestone.forum.${state}`)}
+            </Button>
+          );
+        })}
+      </Dropdown>
     );
 
     return items;

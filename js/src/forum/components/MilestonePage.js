@@ -11,8 +11,8 @@ import ProgressBar from './ProgressBar';
 import Hero from './Hero';
 
 export default class MilestonePage extends Page {
-  init() {
-    super.init();
+  oninit(vnode) {
+    super.oninit(vnode);
 
     this.octokit = new Octokit();
     this.settings = {
