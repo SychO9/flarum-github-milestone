@@ -7,8 +7,10 @@ import humanTime from 'flarum/utils/humanTime';
 import icon from 'flarum/helpers/icon';
 import IssueList from './IssueList';
 import { Octokit } from '@octokit/rest';
-import ProgressBar from './ProgressBar';
 import Hero from './Hero';
+import { uikit } from '@sycho-uikit';
+
+const { ProgressBar } = uikit;
 
 export default class MilestonePage extends Page {
   oninit(vnode) {
@@ -38,7 +40,7 @@ export default class MilestonePage extends Page {
             title={this.milestone.title}
             subtitle={[
               <div className="GithubMilestone-details">{listItems(this.milestoneDetails().toArray())}</div>,
-              <ProgressBar className="GithubMilestone-progress--fancy GithubMilestone-progress--alternate" progress={this.progress} />,
+              <ProgressBar fancy={true} alternate={true} progress={this.progress} />,
             ]}
           />
         )}

@@ -3,7 +3,9 @@ import humanTime from 'flarum/utils/humanTime';
 import listItems from 'flarum/helpers/listItems';
 import ItemList from 'flarum/utils/ItemList';
 import icon from 'flarum/helpers/icon';
-import ProgressBar from './ProgressBar';
+import { uikit } from '@sycho-uikit';
+
+const { ProgressBar, LabelGroup, Label } = uikit;
 
 export default class IssueListItem extends Component {
   view() {
@@ -79,13 +81,11 @@ export default class IssueListItem extends Component {
 
     items.add(
       'issues',
-      <span className="IssuesLabel">
+      <LabelGroup>
         {issue.labels.map((label) => (
-          <span className="IssueLabel colored" style={{ backgroundColor: `#${label.color}` }}>
-            <span className="IssueLabel-text">{label.name}</span>
-          </span>
+          <Label color={label.color}>{label.name}</Label>
         ))}
-      </span>
+      </LabelGroup>
     );
 
     return items;

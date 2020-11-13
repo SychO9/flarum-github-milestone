@@ -12,7 +12,8 @@
   "type": "flarum-extension",
   "require": {
     "flarum/core": "^0.1.0-beta.14",
-    "fof/extend": ">=0.2.0"
+    "fof/extend": ">=0.2.0",
+    "sycho/flarum-uikit": "^0.1.0"
   },
   "autoload": {
     "psr-4": {
