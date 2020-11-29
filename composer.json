@@ -34,6 +34,10 @@
     "flarum-extension": {
       "title": "GitHub Milestone Activity",
       "category": "feature",
+      "info": {
+        "donate": "https://www.buymeacoffee.com/sycho",
+        "website": "https://sycho9.github.io"
+      },
       "icon": {
         "name": "fab fa-github-alt",
         "background": "#117187",
