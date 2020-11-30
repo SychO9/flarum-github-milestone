@@ -40,7 +40,7 @@
       },
       "icon": {
         "name": "fab fa-github-alt",
-        "background": "#117187",
+        "backgroundColor": "#117187",
         "color": "#fff"
       }
     }
