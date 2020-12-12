@@ -6,12 +6,17 @@ app.initializers.add('sycho-github-milestone', (app) => {
     .registerSetting({
       setting: 'sycho-github-milestone.repository',
       type: 'text',
-      label: [app.translator.trans('sycho-github-milestone.admin.repository'), ' (', app.translator.trans('sycho-github-milestone.admin.repository_example'), ')']
+      label: [
+        app.translator.trans('sycho-github-milestone.admin.repository'),
+        ' (',
+        app.translator.trans('sycho-github-milestone.admin.repository_example'),
+        ')',
+      ],
     })
     .registerSetting({
       setting: 'sycho-github-milestone.milestone_id',
       type: 'number',
-      label: app.translator.trans('sycho-github-milestone.admin.milestone')
+      label: app.translator.trans('sycho-github-milestone.admin.milestone'),
     })
     .registerSetting({
       setting: 'sycho-github-milestone.default_filter',
@@ -22,6 +27,6 @@ app.initializers.add('sycho-github-milestone', (app) => {
         closed: app.translator.trans('sycho-github-milestone.admin.closed'),
       },
       default: 'all',
-      label: app.translator.trans('sycho-github-milestone.admin.default_filter')
-    })
+      label: app.translator.trans('sycho-github-milestone.admin.default_filter'),
+    });
 });
