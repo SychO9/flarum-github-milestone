@@ -4,6 +4,7 @@ import listItems from 'flarum/helpers/listItems';
 import ItemList from 'flarum/utils/ItemList';
 import icon from 'flarum/helpers/icon';
 import { uikit } from '@sycho-uikit';
+import octicons from '../utils/octicons';
 
 const { ProgressBar, LabelGroup, Label } = uikit;
 
@@ -42,13 +43,18 @@ export default class IssueListItem extends Component {
 
   badgeItems(issue) {
     const items = new ItemList();
-    const type = { icon: 'fas fa-exclamation', state: 'Badge--issueOpen' };
 
-    if (issue.pull_request) type.icon = 'fas fa-code-branch';
+    let type = 'issue';
+    let state = issue.state;
 
-    if (issue.state === 'closed') type.state = 'Badge--issueClosed';
+    if (issue.pull_request) type = 'pull';
 
-    items.add('state', <span className={`Badge ${type.state}`}>{icon(type.icon)}</span>);
+    items.add(
+      'state',
+      <span className={`Badge GithubMilestone-Badge`} style={{backgroundColor: octicons[type][state].color}}>
+        {octicons[type][state].icon}
+      </span>
+    );
 
     return items;
   }

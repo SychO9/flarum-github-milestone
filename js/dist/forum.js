@@ -3327,7 +3327,9 @@ var IssueList = /*#__PURE__*/function (_Component) {
     _Component.prototype.oninit.call(this, vnode);
 
     this.octokit = this.attrs.octokit;
-    this.issues = [];
+    this.issues = new Map();
+    this.mergedPrs = new Map();
+    this.allMergedPrs = false;
     this.filters = {
       state: {
         value: app.data['sycho-github-milestone.default_filter'] || 'all',
@@ -3348,6 +3350,12 @@ var IssueList = /*#__PURE__*/function (_Component) {
     }
 
     if (!this.canLoadMore() && !this.loadingMore) loadingMore = '';
+    var issuesVnodes = [];
+    this.issues.forEach(function (issue) {
+      issuesVnodes.push(m("li", null, m(_IssueListItem__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        issue: issue
+      })));
+    });
     return m("div", {
       className: "GithubMilestone-issues"
     }, m("div", {
@@ -3360,11 +3368,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
       className: "GithubMilestone-issuesContainer"
     }, m("ul", {
       className: "GithubMilestone-issuesList"
-    }, this.issues.map(function (issue) {
-      return m("li", null, m(_IssueListItem__WEBPACK_IMPORTED_MODULE_7__["default"], {
-        issue: issue
-      }));
-    })), m("div", {
+    }, issuesVnodes), m("div", {
       className: "DiscussionList-loadMore"
     }, loadingMore)));
   };
@@ -3374,7 +3378,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
     if (!more) this.loading = true;
     if (more) this.loadingMore = true;
     if (more && this.canLoadMore()) this.page++;
-    this.octokit.request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
+    var issuesPromise = this.octokit.request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
       owner: this.attrs.milestone.repository.owner,
       repo: this.attrs.milestone.repository.name,
       milestone: this.attrs.milestone.number,
@@ -3382,13 +3386,41 @@ var IssueList = /*#__PURE__*/function (_Component) {
       state: this.filters.state.value,
       page: this.page || 1,
       perPage: 15
-    }).then(this.handleResponse.bind(this, more));
+    });
+    var mergedPrsPromise = [];
+
+    if (!this.allMergedPrs) {
+      mergedPrsPromise = this.octokit.search.issuesAndPullRequests({
+        q: "repo:" + this.attrs.milestone.repository.owner + "/" + this.attrs.milestone.repository.name + " milestone:" + this.attrs.milestone.title + " is:merged is:pull-request",
+        state: 'merged',
+        page: this.page || 1,
+        "per_page": 15
+      });
+    }
+
+    Promise.all([issuesPromise, mergedPrsPromise]).then(this.handleResponse.bind(this, more));
   };
 
-  _proto.handleResponse = function handleResponse(more, response) {
-    var _this$issues;
+  _proto.handleResponse = function handleResponse(more, responses) {
+    var _this = this;
 
-    if (more) (_this$issues = this.issues).push.apply(_this$issues, response.data);else this.issues = response.data;
+    var issues = responses[0],
+        mergedPrs = responses[1];
+
+    if (!this.allMergedPrs) {
+      mergedPrs.data.items.map(function (pr) {
+        _this.mergedPrs.set(pr.id, pr);
+      });
+      if (this.mergedPrs.size >= mergedPrs.data.total_count) this.allMergedPrs = true;
+    }
+
+    if (!more) this.issues.clear();
+    issues.data.map(function (issue) {
+      _this.issues.set(issue.id, issue);
+    });
+    this.mergedPrs.forEach(function (pr) {
+      if (_this.issues.has(pr.id)) _this.issues.get(pr.id).state = 'merged';
+    });
     this.loading = false;
     this.loadingMore = false;
     m.redraw();
@@ -3417,21 +3449,21 @@ var IssueList = /*#__PURE__*/function (_Component) {
         totalIssues = this.attrs.milestone[this.filters.state.value + "_issues"];
     }
 
-    return this.issues.length < totalIssues;
+    return this.issues.size < totalIssues;
   };
 
   _proto.viewItems = function viewItems() {
-    var _this = this;
+    var _this2 = this;
 
     var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5___default.a();
     items.add('state', m(flarum_components_Dropdown__WEBPACK_IMPORTED_MODULE_6___default.a, {
       buttonClassName: "Button",
       label: app.translator.trans("sycho-github-milestone.forum." + this.filters.state.value)
     }, this.filters.state.options.map(function (state) {
-      var active = state === _this.filters.state.value;
+      var active = state === _this2.filters.state.value;
       return m(flarum_components_Button__WEBPACK_IMPORTED_MODULE_3___default.a, {
         icon: active ? 'fas fa-check' : ' ',
-        onclick: _this.changeState.bind(_this, state),
+        onclick: _this2.changeState.bind(_this2, state),
         active: active
       }, app.translator.trans("sycho-github-milestone.forum." + state));
     })));
@@ -3479,6 +3511,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _sycho_uikit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @sycho-uikit */ "@sycho-uikit");
 /* harmony import */ var _sycho_uikit__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_sycho_uikit__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_octicons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/octicons */ "./src/forum/utils/octicons.js");
+
 
 
 
@@ -3537,15 +3571,15 @@ var IssueListItem = /*#__PURE__*/function (_Component) {
 
   _proto.badgeItems = function badgeItems(issue) {
     var items = new flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_4___default.a();
-    var type = {
-      icon: 'fas fa-exclamation',
-      state: 'Badge--issueOpen'
-    };
-    if (issue.pull_request) type.icon = 'fas fa-code-branch';
-    if (issue.state === 'closed') type.state = 'Badge--issueClosed';
+    var type = 'issue';
+    var state = issue.state;
+    if (issue.pull_request) type = 'pull';
     items.add('state', m("span", {
-      className: "Badge " + type.state
-    }, flarum_helpers_icon__WEBPACK_IMPORTED_MODULE_5___default()(type.icon)));
+      className: "Badge GithubMilestone-Badge",
+      style: {
+        backgroundColor: _utils_octicons__WEBPACK_IMPORTED_MODULE_7__["default"][type][state].color
+      }
+    }, _utils_octicons__WEBPACK_IMPORTED_MODULE_7__["default"][type][state].icon));
     return items;
   };
 
@@ -3757,6 +3791,89 @@ app.initializers.add('sycho-github-milestone', function (app) {
     }, app.translator.trans('sycho-github-milestone.forum.title')), 100);
     return navItems;
   });
+});
+
+/***/ }),
+
+/***/ "./src/forum/utils/octicons.js":
+/*!*************************************!*\
+  !*** ./src/forum/utils/octicons.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  issue: {
+    open: {
+      icon: m("svg", {
+        "class": "icon",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 16 16",
+        width: "16",
+        height: "16"
+      }, m("path", {
+        "fill-rule": "evenodd",
+        d: "M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"
+      })),
+      color: "#22863a"
+    },
+    closed: {
+      icon: m("svg", {
+        "class": "icon",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 16 16",
+        width: "16",
+        height: "16"
+      }, m("path", {
+        "fill-rule": "evenodd",
+        d: "M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
+      })),
+      color: "#cb2431"
+    }
+  },
+  pull: {
+    open: {
+      icon: m("svg", {
+        "class": "icon",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 16 16",
+        width: "16",
+        height: "16"
+      }, m("path", {
+        "fill-rule": "evenodd",
+        d: "M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"
+      })),
+      color: "#22863a"
+    },
+    closed: {
+      icon: m("svg", {
+        "class": "icon",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 16 16",
+        width: "16",
+        height: "16"
+      }, m("path", {
+        "fill-rule": "evenodd",
+        d: "M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"
+      })),
+      color: "#cb2431"
+    },
+    merged: {
+      icon: m("svg", {
+        "class": "icon",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 16 16",
+        width: "16",
+        height: "16"
+      }, m("path", {
+        "fill-rule": "evenodd",
+        d: "M5 3.254V3.25v.005a.75.75 0 110-.005v.004zm.45 1.9a2.25 2.25 0 10-1.95.218v5.256a2.25 2.25 0 101.5 0V7.123A5.735 5.735 0 009.25 9h1.378a2.251 2.251 0 100-1.5H9.25a4.25 4.25 0 01-3.8-2.346zM12.75 9a.75.75 0 100-1.5.75.75 0 000 1.5zm-8.5 4.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
+      })),
+      color: "#6f42c1"
+    }
+  }
 });
 
 /***/ }),
