@@ -131,9 +131,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modals_GithubMilestoneSettingsModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modals/GithubMilestoneSettingsModal */ "./src/admin/modals/GithubMilestoneSettingsModal.js");
 
 app.initializers.add('sycho-github-milestone', function (app) {
-  app.extensionSettings['sycho-github-milestone'] = function () {
-    return app.modal.show(_modals_GithubMilestoneSettingsModal__WEBPACK_IMPORTED_MODULE_0__["default"]);
-  };
+  app.extensionData["for"]('sycho-github-milestone').registerSetting({
+    setting: 'sycho-github-milestone.repository',
+    type: 'text',
+    label: [app.translator.trans('sycho-github-milestone.admin.repository'), ' (', app.translator.trans('sycho-github-milestone.admin.repository_example'), ')']
+  }).registerSetting({
+    setting: 'sycho-github-milestone.milestone_id',
+    type: 'number',
+    label: app.translator.trans('sycho-github-milestone.admin.milestone')
+  }).registerSetting({
+    setting: 'sycho-github-milestone.default_filter',
+    type: 'select',
+    options: {
+      all: app.translator.trans('sycho-github-milestone.admin.all'),
+      open: app.translator.trans('sycho-github-milestone.admin.open'),
+      closed: app.translator.trans('sycho-github-milestone.admin.closed')
+    },
+    "default": 'all',
+    label: app.translator.trans('sycho-github-milestone.admin.default_filter')
+  });
 });
 
 /***/ }),
