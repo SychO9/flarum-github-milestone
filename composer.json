@@ -12,7 +12,8 @@
   "type": "flarum-extension",
   "support": {
     "issues": "https://github.com/SychO9/flarum-github-milestone/issues",
-    "source": "https://github.com/SychO9/flarum-github-milestone"
+    "source": "https://github.com/SychO9/flarum-github-milestone",
+    "forum": "https://discuss.flarum.org/d/25521"
   },
   "funding": [
     {
@@ -34,10 +35,6 @@
     "flarum-extension": {
       "title": "GitHub Milestone Activity",
       "category": "feature",
-      "info": {
-        "donate": "https://www.buymeacoffee.com/sycho",
-        "website": "https://sycho9.github.io"
-      },
       "icon": {
         "name": "fab fa-github-alt",
         "backgroundColor": "#117187",

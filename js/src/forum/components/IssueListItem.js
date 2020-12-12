@@ -51,7 +51,7 @@ export default class IssueListItem extends Component {
 
     items.add(
       'state',
-      <span className={`Badge GithubMilestone-Badge`} style={{backgroundColor: octicons[type][state].color}}>
+      <span className={`Badge GithubMilestone-Badge`} style={{ backgroundColor: octicons[type][state].color }}>
         {octicons[type][state].icon}
       </span>
     );

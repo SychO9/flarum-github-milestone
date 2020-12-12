@@ -57,9 +57,7 @@ export default class IssueList extends Component {
           <LoadingIndicator />
         ) : (
           <div className="GithubMilestone-issuesContainer">
-            <ul className="GithubMilestone-issuesList">
-              {issuesVnodes}
-            </ul>
+            <ul className="GithubMilestone-issuesList">{issuesVnodes}</ul>
             <div className="DiscussionList-loadMore">{loadingMore}</div>
           </div>
         )}
@@ -76,8 +74,9 @@ export default class IssueList extends Component {
 
     if (more && this.canLoadMore()) this.page++;
 
-    const issuesPromise = this.octokit
-      .request('GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage', {
+    const issuesPromise = this.octokit.request(
+      'GET /repos/:owner/:repo/issues?milestone=:milestone&sort=:sort&state=:state&page=:page&per_page=:perPage',
+      {
         owner: this.attrs.milestone.repository.owner,
         repo: this.attrs.milestone.repository.name,
         milestone: this.attrs.milestone.number,
@@ -85,18 +84,18 @@ export default class IssueList extends Component {
         state: this.filters.state.value,
         page: this.page || 1,
         perPage: 15,
-      });
+      }
+    );
 
-      let mergedPrsPromise = [];
+    let mergedPrsPromise = [];
 
     if (!this.allMergedPrs) {
-      mergedPrsPromise = this.octokit
-        .search.issuesAndPullRequests({
-          q: `repo:${this.attrs.milestone.repository.owner}/${this.attrs.milestone.repository.name} milestone:${this.attrs.milestone.title} is:merged is:pull-request`,
-          state: 'merged',
-          page: this.page || 1,
-          "per_page": 15,
-        });
+      mergedPrsPromise = this.octokit.search.issuesAndPullRequests({
+        q: `repo:${this.attrs.milestone.repository.owner}/${this.attrs.milestone.repository.name} milestone:${this.attrs.milestone.title} is:merged is:pull-request`,
+        state: 'merged',
+        page: this.page || 1,
+        per_page: 15,
+      });
     }
 
     Promise.all([issuesPromise, mergedPrsPromise]).then(this.handleResponse.bind(this, more));
@@ -110,20 +109,17 @@ export default class IssueList extends Component {
         this.mergedPrs.set(pr.id, pr);
       });
 
-      if (this.mergedPrs.size >= mergedPrs.data.total_count)
-        this.allMergedPrs = true;
+      if (this.mergedPrs.size >= mergedPrs.data.total_count) this.allMergedPrs = true;
     }
 
-    if (!more)
-      this.issues.clear();
+    if (!more) this.issues.clear();
 
     issues.data.map((issue) => {
       this.issues.set(issue.id, issue);
     });
 
     this.mergedPrs.forEach((pr) => {
-      if (this.issues.has(pr.id))
-        this.issues.get(pr.id).state = 'merged';
+      if (this.issues.has(pr.id)) this.issues.get(pr.id).state = 'merged';
     });
 
     this.loading = false;
