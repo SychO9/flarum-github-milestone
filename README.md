@@ -7,7 +7,7 @@
 
 [Flarum](https://flarum.org) extension that shows the status and activity of a github milestone.
 
-![Screenshot_117](https://user-images.githubusercontent.com/20267363/100650188-d425bb00-3343-11eb-830a-2d66408f0af3.png)
+![Screenshot_117](https://user-images.githubusercontent.com/20267363/102013030-cb72b300-3d4d-11eb-99ef-602af4a91c8a.png)
 
 ## Installation
 ```ssh
