@@ -3332,7 +3332,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
     this.allMergedPrs = false;
     this.filters = {
       state: {
-        value: app.data['sycho-github-milestone.default_filter'] || 'all',
+        value: app.forum.attribute('sycho-github-milestone.default_filter') || 'all',
         options: ['all', 'closed', 'open']
       }
     };
@@ -3394,7 +3394,7 @@ var IssueList = /*#__PURE__*/function (_Component) {
         q: "repo:" + this.attrs.milestone.repository.owner + "/" + this.attrs.milestone.repository.name + " milestone:" + this.attrs.milestone.title + " is:merged is:pull-request",
         state: 'merged',
         page: this.page || 1,
-        "per_page": 15
+        per_page: 15
       });
     }
 
@@ -3676,10 +3676,10 @@ var MilestonePage = /*#__PURE__*/function (_Page) {
     this.octokit = new _octokit_rest__WEBPACK_IMPORTED_MODULE_10__["Octokit"]();
     this.settings = {
       repository: {
-        owner: app.data['sycho-github-milestone.repository'].split('/')[0],
-        name: app.data['sycho-github-milestone.repository'].split('/')[1]
+        owner: app.forum.attribute('sycho-github-milestone.repository').split('/')[0],
+        name: app.forum.attribute('sycho-github-milestone.repository').split('/')[1]
       },
-      milestone: app.data['sycho-github-milestone.milestone_id']
+      milestone: app.forum.attribute('sycho-github-milestone.milestone_id')
     };
     this.milestone = {};
     this.progress = 0;
@@ -3779,7 +3779,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 app.initializers.add('sycho-github-milestone', function (app) {
-  if (!app.data['sycho-github-milestone.repository'] || !app.data['sycho-github-milestone.milestone_id']) return;
+  var repository = app.data.resources[0].attributes['sycho-github-milestone.repository'];
+  var milestone_id = app.data.resources[0].attributes['sycho-github-milestone.milestone_id'];
+  if (!repository || !milestone_id) return;
   app.routes.githubMilestone = {
     path: '/milestone',
     component: _components_MilestonePage__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -3817,7 +3819,7 @@ __webpack_require__.r(__webpack_exports__);
         "fill-rule": "evenodd",
         d: "M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"
       })),
-      color: "#22863a"
+      color: '#22863a'
     },
     closed: {
       icon: m("svg", {
@@ -3830,7 +3832,7 @@ __webpack_require__.r(__webpack_exports__);
         "fill-rule": "evenodd",
         d: "M1.5 8a6.5 6.5 0 0110.65-5.003.75.75 0 00.959-1.153 8 8 0 102.592 8.33.75.75 0 10-1.444-.407A6.5 6.5 0 011.5 8zM8 12a1 1 0 100-2 1 1 0 000 2zm0-8a.75.75 0 01.75.75v3.5a.75.75 0 11-1.5 0v-3.5A.75.75 0 018 4zm4.78 4.28l3-3a.75.75 0 00-1.06-1.06l-2.47 2.47-.97-.97a.749.749 0 10-1.06 1.06l1.5 1.5a.75.75 0 001.06 0z"
       })),
-      color: "#cb2431"
+      color: '#cb2431'
     }
   },
   pull: {
@@ -3845,7 +3847,7 @@ __webpack_require__.r(__webpack_exports__);
         "fill-rule": "evenodd",
         d: "M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"
       })),
-      color: "#22863a"
+      color: '#22863a'
     },
     closed: {
       icon: m("svg", {
@@ -3858,7 +3860,7 @@ __webpack_require__.r(__webpack_exports__);
         "fill-rule": "evenodd",
         d: "M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"
       })),
-      color: "#cb2431"
+      color: '#cb2431'
     },
     merged: {
       icon: m("svg", {
@@ -3871,7 +3873,7 @@ __webpack_require__.r(__webpack_exports__);
         "fill-rule": "evenodd",
         d: "M5 3.254V3.25v.005a.75.75 0 110-.005v.004zm.45 1.9a2.25 2.25 0 10-1.95.218v5.256a2.25 2.25 0 101.5 0V7.123A5.735 5.735 0 009.25 9h1.378a2.251 2.251 0 100-1.5H9.25a4.25 4.25 0 01-3.8-2.346zM12.75 9a.75.75 0 100-1.5.75.75 0 000 1.5zm-8.5 4.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
       })),
-      color: "#6f42c1"
+      color: '#6f42c1'
     }
   }
 });

@@ -1,5 +1,3 @@
-import GithubMilestoneSettingsModal from './modals/GithubMilestoneSettingsModal';
-
 app.initializers.add('sycho-github-milestone', (app) => {
   app.extensionData
     .for('sycho-github-milestone')

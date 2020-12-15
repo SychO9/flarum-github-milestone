@@ -1,4 +1,4 @@
-# GitHub Milestone
+# GitHub Milestone Activity
 [![latest version](https://img.shields.io/packagist/v/sycho/flarum-github-milestone.svg?style=flat-square)](https://packagist.org/packages/sycho/flarum-github-milestone)
 ![flarum version](https://img.shields.io/badge/flarum-%5E0.1.0--beta.14-%23e7742e?style=flat-square)
 ![mit license](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square&color=green)

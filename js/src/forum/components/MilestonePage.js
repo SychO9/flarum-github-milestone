@@ -19,10 +19,10 @@ export default class MilestonePage extends Page {
     this.octokit = new Octokit();
     this.settings = {
       repository: {
-        owner: app.data['sycho-github-milestone.repository'].split('/')[0],
-        name: app.data['sycho-github-milestone.repository'].split('/')[1],
+        owner: app.forum.attribute('sycho-github-milestone.repository').split('/')[0],
+        name: app.forum.attribute('sycho-github-milestone.repository').split('/')[1],
       },
-      milestone: app.data['sycho-github-milestone.milestone_id'],
+      milestone: app.forum.attribute('sycho-github-milestone.milestone_id'),
     };
     this.milestone = {};
     this.progress = 0;

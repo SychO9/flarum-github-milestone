@@ -16,7 +16,7 @@ export default class IssueList extends Component {
     this.allMergedPrs = false;
     this.filters = {
       state: {
-        value: app.data['sycho-github-milestone.default_filter'] || 'all',
+        value: app.forum.attribute('sycho-github-milestone.default_filter') || 'all',
         options: ['all', 'closed', 'open'],
       },
     };

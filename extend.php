@@ -22,7 +22,8 @@ return [
 
     new Extend\Locales(__DIR__.'/locale'),
 
-    (new FoF\Extend\Extend\ExtensionSettings())
-        ->setPrefix('sycho-github-milestone.')
-        ->addKeys(['repository', 'milestone_id', 'default_filter']),
+    (new Extend\Settings)
+        ->serializeToForum('sycho-github-milestone.repository', 'sycho-github-milestone.repository')
+        ->serializeToForum('sycho-github-milestone.milestone_id', 'sycho-github-milestone.milestone_id')
+        ->serializeToForum('sycho-github-milestone.default_filter', 'sycho-github-milestone.default_filter'),
 ];
