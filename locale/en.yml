@@ -1,25 +1,25 @@
 sycho-github-milestone:
 
   admin:
-    repository: GitHub Repository
-    repository_example: 'example: flarum/core'
+    repository: Repository su GitHub
+    repository_example: 'esempio: flarum/core'
     milestone: Milestone ID
-    default_filter: Default Filter
+    default_filter: Filtro di default
     closed: => sycho-github-milestone.ref.closed
     open: => sycho-github-milestone.ref.open
     all: => sycho-github-milestone.ref.all
 
   forum:
-    title: Milestone
-    last_updated: Last updated {time}
+    title: Avanzamento Rilasci
+    last_updated: Ultimo aggiornamento: {time}
     closed: => sycho-github-milestone.ref.closed
     open: => sycho-github-milestone.ref.open
     all: => sycho-github-milestone.ref.all
-    complete: '{progress} Complete'
+    complete: '{progress} Completato'
     load_more: => core.forum.discussion_list.load_more_button
-    tasks_done: '{number} of {total}'
+    tasks_done: '{number} di {total}'
 
   ref:
-    closed: Closed
-    open: Open
-    all: All
+    closed: Chiuso
+    open: Aperto
+    all: Tutti
