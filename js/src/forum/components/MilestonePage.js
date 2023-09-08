@@ -107,7 +107,8 @@ export default class MilestonePage extends Page {
 
   handleResponse(response) {
     this.milestone = { repository: this.settings.repository, ...response.data };
-    this.progress = Math.round((this.milestone.closed_issues * 100) / (this.milestone.closed_issues + this.milestone.open_issues));
+    let total = this.milestone.closed_issues + this.milestone.open_issues
+    this.progress = total === 0 ? 0:Math.round((this.milestone.closed_issues * 100) / total);
     this.loading = false;
     m.redraw();
   }
