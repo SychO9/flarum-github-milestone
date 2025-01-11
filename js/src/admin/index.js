@@ -1,5 +1,5 @@
 app.initializers.add('sycho-github-milestone', (app) => {
-  app.extensionData
+  app.registry
     .for('sycho-github-milestone')
     .registerSetting({
       setting: 'sycho-github-milestone.repository',

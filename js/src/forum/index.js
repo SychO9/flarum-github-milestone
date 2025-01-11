@@ -1,5 +1,5 @@
+import IndexSidebar from 'flarum/forum/components/IndexSidebar';
 import { extend } from 'flarum/common/extend';
-import IndexPage from 'flarum/forum/components/IndexPage';
 import LinkButton from 'flarum/common/components/LinkButton';
 
 import MilestonePage from './components/MilestonePage';
@@ -15,7 +15,7 @@ app.initializers.add('sycho-github-milestone', (app) => {
     component: MilestonePage,
   };
 
-  extend(IndexPage.prototype, 'navItems', (navItems) => {
+  extend(IndexSidebar.prototype, 'navItems', (navItems) => {
     navItems.add(
       'githubMilestone',
       <LinkButton href={app.route('githubMilestone')} icon="fab fa-github-alt">

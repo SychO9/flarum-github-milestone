@@ -2,7 +2,7 @@ import Component from 'flarum/common/Component';
 import humanTime from 'flarum/common/utils/humanTime';
 import listItems from 'flarum/common/helpers/listItems';
 import ItemList from 'flarum/common/utils/ItemList';
-import icon from 'flarum/common/helpers/icon';
+import Icon from 'flarum/common/components/Icon';
 import octicons from '../utils/octicons';
 import ProgressBar from 'ext:sycho/flarum-uikit/common/components/ProgressBar';
 import LabelGroup from 'ext:sycho/flarum-uikit/common/components/LabelGroup';
@@ -65,7 +65,7 @@ export default class IssueListItem extends Component {
     items.add(
       'terminalPost',
       <span>
-        {icon('far fa-clock')} {app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(issue.updated_at) })}
+        <Icon name="far fa-clock" /> {app.translator.trans('sycho-github-milestone.forum.last_updated', { time: humanTime(issue.updated_at) })}
       </span>
     );
 
@@ -75,7 +75,7 @@ export default class IssueListItem extends Component {
       items.add(
         'tasks',
         <span>
-          {icon('fas fa-tasks')}{' '}
+          <Icon name="fas fa-tasks" />{' '}
           {app.translator.trans('sycho-github-milestone.forum.tasks_done', {
             number: tasks.current,
             total: tasks.total,
