@@ -1,9 +1,9 @@
-import Component from 'flarum/Component';
-import LoadingIndicator from 'flarum/components/LoadingIndicator';
-import Button from 'flarum/components/Button';
-import listItems from 'flarum/helpers/listItems';
-import ItemList from 'flarum/utils/ItemList';
-import Dropdown from 'flarum/components/Dropdown';
+import Component from 'flarum/common/Component';
+import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
+import Button from 'flarum/common/components/Button';
+import listItems from 'flarum/common/helpers/listItems';
+import ItemList from 'flarum/common/utils/ItemList';
+import Dropdown from 'flarum/common/components/Dropdown';
 import IssueListItem from './IssueListItem';
 
 export default class IssueList extends Component {

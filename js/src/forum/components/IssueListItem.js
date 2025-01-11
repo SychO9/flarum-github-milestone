@@ -1,8 +1,8 @@
-import Component from 'flarum/Component';
-import humanTime from 'flarum/utils/humanTime';
-import listItems from 'flarum/helpers/listItems';
-import ItemList from 'flarum/utils/ItemList';
-import icon from 'flarum/helpers/icon';
+import Component from 'flarum/common/Component';
+import humanTime from 'flarum/common/utils/humanTime';
+import listItems from 'flarum/common/helpers/listItems';
+import ItemList from 'flarum/common/utils/ItemList';
+import icon from 'flarum/common/helpers/icon';
 import { uikit } from '@sycho-uikit';
 import octicons from '../utils/octicons';
 

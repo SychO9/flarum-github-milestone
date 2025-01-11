@@ -1,10 +1,10 @@
-import Page from 'flarum/components/Page';
-import IndexPage from 'flarum/components/IndexPage';
-import listItems from 'flarum/helpers/listItems';
-import ItemList from 'flarum/utils/ItemList';
-import LoadingIndicator from 'flarum/components/LoadingIndicator';
-import humanTime from 'flarum/utils/humanTime';
-import icon from 'flarum/helpers/icon';
+import Page from 'flarum/common/components/Page';
+import IndexPage from 'flarum/forum/components/IndexPage';
+import listItems from 'flarum/common/helpers/listItems';
+import ItemList from 'flarum/common/utils/ItemList';
+import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
+import humanTime from 'flarum/common/utils/humanTime';
+import icon from 'flarum/common/helpers/icon';
 import IssueList from './IssueList';
 import { Octokit } from '@octokit/rest';
 import Hero from './Hero';
