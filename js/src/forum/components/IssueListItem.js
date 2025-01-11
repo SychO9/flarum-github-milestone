@@ -3,10 +3,10 @@ import humanTime from 'flarum/common/utils/humanTime';
 import listItems from 'flarum/common/helpers/listItems';
 import ItemList from 'flarum/common/utils/ItemList';
 import icon from 'flarum/common/helpers/icon';
-import { uikit } from '@sycho-uikit';
 import octicons from '../utils/octicons';
-
-const { ProgressBar, LabelGroup, Label } = uikit;
+import ProgressBar from 'ext:sycho/flarum-uikit/common/components/ProgressBar';
+import LabelGroup from 'ext:sycho/flarum-uikit/common/components/LabelGroup';
+import Label from 'ext:sycho/flarum-uikit/common/components/Label';
 
 export default class IssueListItem extends Component {
   view() {

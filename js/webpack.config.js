@@ -1,3 +1,1 @@
-module.exports = require('flarum-webpack-config')({
-  useExtensions: ['sycho-uikit']
-});
+module.exports = require('flarum-webpack-config')();

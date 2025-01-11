@@ -8,9 +8,7 @@ import icon from 'flarum/common/helpers/icon';
 import IssueList from './IssueList';
 import { Octokit } from '@octokit/rest';
 import Hero from './Hero';
-import { uikit } from '@sycho-uikit';
-
-const { ProgressBar } = uikit;
+import ProgressBar from 'ext:sycho/flarum-uikit/common/components/ProgressBar';
 
 export default class MilestonePage extends Page {
   oninit(vnode) {
