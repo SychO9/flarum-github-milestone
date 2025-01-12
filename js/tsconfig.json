@@ -17,8 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "flarum/*": ["../vendor/flarum/core/js/dist-typings/*"],
-// <CUSTOM-2>
-// </CUSTOM-2>
+      "ext:flarum/tags/*": ["../vendor/flarum/tags/js/dist-typings/*"],
+      "ext:sycho/flarum-uikit/*": ["../vendor/sycho/flarum-uikit/js/dist-typings/*"]
     }
   }
 }

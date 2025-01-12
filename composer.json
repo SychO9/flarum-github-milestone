@@ -22,7 +22,8 @@
     ],
     "require": {
         "flarum/core": "^2.0.0-beta",
-        "sycho/flarum-uikit": "^0.3.0"
+        "sycho/flarum-uikit": "^0.3.0",
+        "knplabs/github-api": "^3.16"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +32,7 @@
     },
     "extra": {
         "flarum-extension": {
-            "title": "GitHub Milestone Activity",
+            "title": "GitHub Milestone",
             "category": "feature",
             "icon": {
                 "name": "fab fa-github-alt",
@@ -46,6 +47,14 @@
                 "editorConfig": true,
                 "prettier": true
             }
+        }
+    },
+    "require-dev": {
+        "flarum/tags": "^2.0.0-beta"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
         }
     }
 }
