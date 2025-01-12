@@ -1,4 +1,4 @@
-name: GitHub Milestone Activity PHP
+name: PHP
 
 on: [workflow_dispatch, push, pull_request]
 
